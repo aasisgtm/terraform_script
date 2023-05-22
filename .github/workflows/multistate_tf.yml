@@ -7,13 +7,25 @@ jobs:
   build:
     name: Build and Plan 
     runs-on: ubuntu-latest
+
     steps:
+    - name: Configure AWS Credentials Action For GitHub Actions
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_session_token: ${{ secrets.AWS_SESSION_TOKEN }}
+        aws-region: us-west-2
+
       - name: Checkout Code
         uses: actions/checkout@v2
+
       - name: Terraform Init and Plan
         id: terraform
         run: |
           terraform init -input=false
           terraform plan -out "plan-${{ github.event.number }}.tfplan"
+          ls -la
+
 
 
