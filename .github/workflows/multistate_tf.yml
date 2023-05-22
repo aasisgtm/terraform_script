@@ -4,9 +4,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    name: Build and Plan
+    name: Build and Plan 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -16,3 +15,5 @@ jobs:
         run: |
           terraform init -input=false
           terraform plan -out "plan-${{ github.event.number }}.tfplan"
+
+
