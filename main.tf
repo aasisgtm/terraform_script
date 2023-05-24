@@ -49,3 +49,7 @@ module "s3" {
   source = "./modules/s3"
 
 }
+
+module "backend" {
+  source = "./modules/backend"
+}

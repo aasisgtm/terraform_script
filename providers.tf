@@ -13,3 +13,15 @@ provider "aws" {
   region     = "us-west-2"
 
 }
+
+## Terraform backend configuration for state locking
+
+terraform {
+  backend "s3" {
+    bucket         = "tfstate-buckets"
+    encrypt        = true
+    key            = "terraform.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "terraform-state-locking-table"
+  }
+}

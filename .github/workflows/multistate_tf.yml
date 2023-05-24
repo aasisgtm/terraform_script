@@ -25,7 +25,10 @@ jobs:
         run: |
           terraform init -input=false
           terraform plan -out "plan-${{ github.event.number }}.tfplan"
-          ls -la
 
+      - name: Zip Artifact
+        run: zip terraform_plan.zip "plan-${{ github.event.number }}.tfplan"
 
-
+      - name: Upload artifact to S3 bucket
+        run: 
+          aws s3 cp "plan-${{ github.event.number }}.tfplan" s3://tfstate-buckets/
