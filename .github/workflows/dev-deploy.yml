@@ -1,7 +1,6 @@
 name: Deploy to Dev
 on:
   workflow_dispatch:
-
 jobs:
   build:
     name: Deploy to Dev
