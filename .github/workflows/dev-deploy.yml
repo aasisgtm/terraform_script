@@ -30,6 +30,9 @@ jobs:
         id: terraform
         run: |
           terraform init
-          terraform workspace new dev
-          terraform workspace select dev
-          terraform apply -auto-approve -state=plan-${{ github.event.number }}.tfplan
+          if ! terraform workspace select dev; then
+            terraform workspace new dev; 
+          else
+            terraform workspace select dev
+          fi
+            terraform apply -auto-approve -state=plan-${{ github.event.number }}.tfplan
