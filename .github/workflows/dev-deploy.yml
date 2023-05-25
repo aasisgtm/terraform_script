@@ -1,11 +1,9 @@
-name: Terraform Script CI
+name: Deploy to Dev
 on:
-  pull_request:
-    branches: [ "main" ]
-
+  workflow_dispatch:
 jobs:
   build:
-    name: Build and Plan 
+    name: Deploy to Dev
     runs-on: ubuntu-latest
 
     steps:
@@ -20,15 +18,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Terraform Init and Plan
+      - name: Download artifact from S3
+        run:
+          aws s3 cp s3://tfstate-buckets/"plan-${{ github.event.number }}.tfplan" $GITHUB_WORKSPACE
+
+      - name: Terraform apply
         id: terraform
         run: |
-          terraform init -input=false
-          terraform plan -out "plan-${{ github.event.number }}.tfplan"
-
-      - name: Zip Artifact
-        run: zip terraform_plan.zip "plan-${{ github.event.number }}.tfplan"
-
-      - name: Upload artifact to S3 bucket
-        run: 
-          aws s3 cp "plan-${{ github.event.number }}.tfplan" s3://tfstate-buckets/
+          terraform init
+          terraform workspace new dev
+          terraform workspace select dev
+          terraform apply -auto-approve -state=plan-${{ github.event.number }}.tfplan
