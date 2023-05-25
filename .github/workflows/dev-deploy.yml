@@ -20,8 +20,11 @@ jobs:
 
       - name: Download artifact from S3
         run:
-          echo ${{ github.event.number }}
-          aws s3 cp s3://tfstate-buckets/plan-${{ github.event.number }}.tfplan $GITHUB_WORKSPACE
+          aws s3 cp s3://tfstate-buckets/terraform_plan.zip $GITHUB_WORKSPACE
+
+      - name: Unzip the artifact
+        run:
+          unzip terraform_plan.zip
 
       - name: Terraform apply
         id: terraform

@@ -31,4 +31,4 @@ jobs:
 
       - name: Upload artifact to S3 bucket
         run: 
-          aws s3 cp "plan-${{ github.event.number }}.tfplan" s3://tfstate-buckets/
+          aws s3 cp terraform_plan.zip s3://tfstate-buckets/
