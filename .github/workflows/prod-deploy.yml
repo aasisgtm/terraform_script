@@ -1,9 +1,9 @@
-name: Deploy to DEV
+name: Deploy to PROD
 on:
   workflow_dispatch:
 jobs:
   build:
-    name: Deploy to DEV
+    name: Deploy to PROD
     runs-on: ubuntu-latest
 
     steps:
@@ -30,9 +30,9 @@ jobs:
         id: terraform
         run: |
           terraform init
-          if ! terraform workspace select dev; then
-            terraform workspace new dev; 
+          if ! terraform workspace select prod; then
+            terraform workspace new prod; 
           else
-            terraform workspace select dev
+            terraform workspace select prod
           fi
             terraform apply -auto-approve -state=plan-${{ github.event.number }}.tfplan
