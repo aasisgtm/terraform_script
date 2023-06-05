@@ -1,8 +1,7 @@
 name: Terraform Script CI
 on:
   pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
 env:
   RELEASE_ID: "v${{ github.event.number }}"
 
