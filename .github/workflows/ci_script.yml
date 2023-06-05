@@ -30,11 +30,11 @@ jobs:
 
       - name: terraform init
         id: terraform
-        run: terraform init -input=false
+        run: terraform init -input=false 
 
       - name: terraform plan
         id: terraform-plan
-        run: terraform plan -input=false
+        run: terraform plan -input=false -lock=false
 
 
   generate-atifact:
