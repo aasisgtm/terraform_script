@@ -17,13 +17,13 @@
 # }
 
 resource "aws_subnet" "public_subnets" {
-  for_each         = var.public_subnet_config
-  vpc_id           = var.vpc_id
-  cidr_block       = each.value.cidr_block
+  for_each          = var.public_subnet_config
+  vpc_id            = var.vpc_id
+  cidr_block        = each.value.cidr_block
   availability_zone = each.value.availability_zone
 
-    tags = {
-    Name = "${var.public_name}-${each.key}"
+  tags = {
+    Name    = "${var.public_name}-${each.key}"
     Project = var.project
     Creator = var.creator
   }
@@ -33,7 +33,7 @@ resource "aws_route_table" "public" {
   vpc_id = var.vpc_id
 
   tags = {
-    Name = var.public_name
+    Name    = var.public_name
     Project = var.project
     Creator = var.creator
   }
@@ -46,7 +46,7 @@ resource "aws_route" "public" {
 }
 
 resource "aws_route_table_association" "public_subnet_association" {
-  for_each         = aws_subnet.public_subnets
-  subnet_id        = each.value.id
-  route_table_id   = aws_route_table.public.id
+  for_each       = aws_subnet.public_subnets
+  subnet_id      = each.value.id
+  route_table_id = aws_route_table.public.id
 }
