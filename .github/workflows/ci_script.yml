@@ -66,4 +66,4 @@ jobs:
 
       - name: upload artifact to S3
         run: 
-          aws s3 cp  ${{ env.RELEASE_ID }}.zip s3://artifact-stores/
+          aws s3 cp ${{ env.RELEASE_ID }}.zip s3://artifact-stores/
