@@ -1,7 +1,7 @@
 name: Deploy to DEV
 on:
   workflow_dispatch:
-      inputs:
+    inputs:
       artifact-name:
         description: Artifact Name
         required: true
@@ -35,9 +35,9 @@ jobs:
           
       - name: unzip artifacts
         run: unzip ${RELEASE_ID}.zip
-
+        
       - name: Terraform apply
-        id: terraform apply
+        id: terraform-apply
         run: |
           terraform init
           if ! terraform workspace select dev; then
