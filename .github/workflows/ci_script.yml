@@ -29,11 +29,11 @@ jobs:
 
       - name: terraform init
         id: terraform
-        run: terraform init -input=false
+        run: terraform init -input=false 
 
       - name: terraform plan
         id: terraform-plan
-        run: terraform plan -input=false
+        run: terraform plan -input=false -lock=false
 
 
   generate-atifact:
@@ -41,6 +41,9 @@ jobs:
     needs: [plan]
     runs-on: ubuntu-latest
     steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+
       - name: zip artifact
         run: zip ${RELEASE_ID}.zip -r . -x '.terraform/**' -x .terraform.lock.hcl -x '.git/**'
 
