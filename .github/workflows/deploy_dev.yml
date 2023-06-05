@@ -23,18 +23,12 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-west-2
 
-      - name: Checkout Code
-        uses: actions/checkout@v2
+      - name: download artifact from  S3
+        run: 
+          aws s3 cp  s3://artifact-stores/${{ env.RELEASE_ID }}.zip $GITHUB_WORKSPACE
 
-      - name: download artifact
-        id: download-artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: ${{ env.RELEASE_ID }}
-          path: $GITHUB_WORKSPACE
-          
       - name: unzip artifacts
-        run: unzip ${RELEASE_ID}.zip
+        run: unzip ${{ env.RELEASE_ID }}.zip
         
       - name: Terraform apply
         id: terraform-apply
