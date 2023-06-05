@@ -36,9 +36,6 @@ jobs:
       - name: unzip artifacts
         run: unzip ${RELEASE_ID}.zip
 
-      - name: initialize terraform variables
-        run: source dev-init.sh
-
       - name: Terraform apply
         id: terraform apply
         run: |
@@ -49,6 +46,9 @@ jobs:
             terraform workspace select dev
           fi
             terraform apply -auto-approve
+
+
+
 
 
 
