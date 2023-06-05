@@ -1,0 +1,64 @@
+name: Terraform Script CI
+on:
+  pull_request:
+    branches:
+      - main
+env:
+  RELEASE_ID: "v${{ github.event.number }}"
+
+jobs:
+  plan:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: ['dev', 'uat', 'prod']
+    env:
+      TF_ENV: ${{ matrix.environment }}
+
+    steps:
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - name: terraform init
+        id: terraform
+        run: terraform init -input=false
+
+      - name: terraform plan
+        id: terraform-plan
+        run: terraform plan -input=false
+
+
+  generate-atifact:
+    name: Generate Artifact
+    needs: [plan]
+    runs-on: ubuntu-latest
+    steps:
+      - name: zip artifact
+        run: zip ${RELEASE_ID}.zip -r . -x '.terraform/**' -x .terraform.lock.hcl -x '.git/**'
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.RELEASE_ID }}
+          path: ${{ env.RELEASE_ID }}.zip
+
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+      #     aws-region: us-west-2
+
+      # - name: upload artifact to S3
+      #   run: 
+      #     aws s3 cp terraform_plan.zip s3://tfstate-buckets/

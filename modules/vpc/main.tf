@@ -7,7 +7,7 @@ resource "aws_vpc" "main" {
   tags = {
     Project = var.project
     Creator = var.creator
-    Name = var.name
+    Name    = var.name
   }
 }
 
@@ -17,6 +17,6 @@ resource "aws_internet_gateway" "default" {
   tags = {
     Project = var.project
     Creator = var.creator
-    Name = var.name
+    Name    = var.name
   }
 }

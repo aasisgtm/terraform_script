@@ -1,10 +1,10 @@
 variable "vpc_id" {
-  type = string
+  type        = string
   description = "VPC ID used to create subnet"
 }
 
 variable "igw-id" {
-  type = string
+  type        = string
   description = "Internet Gateway ID which the public route table will point to."
 }
 
@@ -57,14 +57,14 @@ variable "public_subnet_config" {
     subnet1 = { cidr_block = "10.0.1.0/24", availability_zone = "us-west-2a" }
     subnet2 = { cidr_block = "10.0.2.0/24", availability_zone = "us-west-2b" }
   }
-#   default = [
-#       { cidr_block = "10.0.1.0/24", az = "us-west-2a" },
-#       { cidr_block = "10.0.2.0/24", az="us-west-2b" }
-#   ]
-#   type = list(object({
-#     cidr_block = string,
-#     az = string
-#   }))
+  #   default = [
+  #       { cidr_block = "10.0.1.0/24", az = "us-west-2a" },
+  #       { cidr_block = "10.0.2.0/24", az="us-west-2b" }
+  #   ]
+  #   type = list(object({
+  #     cidr_block = string,
+  #     az = string
+  #   }))
   description = "Public subnet config used in VPC"
 }
 

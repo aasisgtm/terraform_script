@@ -12,7 +12,7 @@ resource "aws_db_instance" "postgres" {
   vpc_security_group_ids = [aws_security_group.postgres.id]
 
   tags = {
-    Name = var.name
+    Name    = var.name
     Creator = var.creator
     Project = var.project
   }

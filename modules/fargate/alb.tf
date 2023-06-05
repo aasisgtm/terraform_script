@@ -1,13 +1,13 @@
 ## APllication Load Balancer
 
 resource "aws_lb" "application_load_balancer" {
-  name                  = "${var.app_name}-${var.environment}-alb"
-  load_balancer_type    = "application"
-  subnets               = var.public_subnet_ids
-  security_groups       = [aws_security_group.lb.id]
+  name               = "${var.app_name}-${var.environment}-alb"
+  load_balancer_type = "application"
+  subnets            = var.public_subnet_ids
+  security_groups    = [aws_security_group.lb.id]
 
   tags = {
-    Name = var.name
+    Name    = var.name
     Creator = var.creator
     Project = var.project
   }
@@ -22,7 +22,7 @@ resource "aws_lb_target_group" "hello_world" {
   vpc_id      = var.vpc_id
   target_type = "ip"
 
-    health_check {
+  health_check {
     healthy_threshold   = "3"
     interval            = "300"
     protocol            = "HTTP"
@@ -50,8 +50,8 @@ resource "aws_lb_listener" "hello_world" {
 ## Security Group for ALB
 
 resource "aws_security_group" "lb" {
-  name        = "${var.app_name}-alb-sg"
-  vpc_id      = var.vpc_id
+  name   = "${var.app_name}-alb-sg"
+  vpc_id = var.vpc_id
 
   ingress {
     protocol    = "tcp"
@@ -61,9 +61,9 @@ resource "aws_security_group" "lb" {
   }
 
   egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }

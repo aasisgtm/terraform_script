@@ -9,7 +9,7 @@
 #   }
 # }
 
-module vpc {
+module "vpc" {
   source = "./modules/vpc"
 }
 
@@ -22,34 +22,33 @@ module "subnets" {
 
 module "amplify" {
   source = "./modules/amplify"
-  
+
 }
 
 module "rds" {
-  source = "./modules/rds"
-  vpc_id = module.vpc.vpc-id
+  source             = "./modules/rds"
+  vpc_id             = module.vpc.vpc-id
   private_subnet_ids = module.subnets.private_subnet_ids
 }
 
 module "fargate" {
-  source = "./modules/fargate"
-  vpc_id = module.vpc.vpc-id
+  source            = "./modules/fargate"
+  vpc_id            = module.vpc.vpc-id
   public_subnet_ids = module.subnets.public_subnet_ids
 }
 
 module "pipeline" {
-  source = "./modules/pipeline"
+  source       = "./modules/pipeline"
   service_name = module.fargate.service_name
   cluster_name = module.fargate.cluster_name
-  s3_bucket = module.s3.s3_bucket
-  vpc_id = module.vpc.vpc-id
+  s3_bucket    = module.s3.s3_bucket
+  vpc_id       = module.vpc.vpc-id
 }
 
 module "s3" {
   source = "./modules/s3"
-
 }
 
-module "backend" {
-  source = "./modules/backend"
-}
+# module "backend" {
+#   source = "./modules/backend"
+# }

@@ -1,0 +1,54 @@
+name: Deploy to DEV
+on:
+  workflow_dispatch:
+      inputs:
+      artifact-name:
+        description: Artifact Name
+        required: true
+jobs:
+  apply:
+    name: Deploy to DEV
+    runs-on: ubuntu-latest
+    environment: dev
+
+    env:
+      RELEASE_ID: ${{ github.event.inputs.artifact-name }}
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-west-2
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: download artifact
+        id: download-artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.RELEASE_ID }}
+          workflow: ci_script.yml
+          
+      - name: unzip artifacts
+        run: unzip ${RELEASE_ID}.zip
+
+      - name: initialize terraform variables
+        run: source dev-init.sh
+
+      - name: Terraform apply
+        id: terraform apply
+        run: |
+          terraform init
+          if ! terraform workspace select dev; then
+            terraform workspace new dev; 
+          else
+            terraform workspace select dev
+          fi
+            terraform apply -auto-approve
+
+
+
