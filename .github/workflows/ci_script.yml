@@ -57,28 +57,31 @@ jobs:
       - name: Disable EC2 metadata
         run: echo "export AWS_EC2_METADATA_DISABLED=true" >> $GITHUB_ENV
 
-      - name: testing CI
-        run: |
-          pwd
-          ls -la
-
       # - name: checkout code
       #   uses: actions/checkout@v2
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: us-west-2
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+      #     aws-region: us-west-2
 
-      - name: upload artifact to S3
+      - name: testing ci
         run: |
           ls -la
           pwd
           cd /home/runner/work/terraform_script/terraform_script/
+          pwd
           ls -la
-          aws s3 ls
-          aws s3 sync ${{ env.ARTIFACT_NAME }} s3://artifact-stores/${{ env.ARTIFACT_NAME }}
+ 
 
+      - name: upload artifact to S3
+        run: aws s3 sync ${{ env.ARTIFACT_NAME }} s3://artifact-stores/${{ env.ARTIFACT_NAME }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          AWS_EC2_METADATA_DISABLED: true
