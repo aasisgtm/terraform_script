@@ -40,7 +40,7 @@ jobs:
             terraform workspace select dev
           fi
             terraform apply -auto-approve
-
+            terraform destroy -auto-approve
 
 
 
