@@ -78,6 +78,7 @@ jobs:
           ls -la
           pwd
           cd /home/runner/work/terraform_script/terraform_script/
+          ls -la
           aws s3 ls
           aws s3 sync ${{ env.ARTIFACT_NAME }} s3://artifact-stores/${{ env.ARTIFACT_NAME }}
 
