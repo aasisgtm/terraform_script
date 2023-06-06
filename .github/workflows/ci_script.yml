@@ -8,7 +8,7 @@ env:
 jobs:
   plan:
     name: Terraform Plan
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     strategy:
       matrix:
         environment: ['dev', 'uat', 'prod']
