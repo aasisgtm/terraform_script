@@ -9,7 +9,7 @@ env:
 jobs:
   plan:
     name: Terraform Plan
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         environment: ['dev', 'uat', 'prod']
@@ -40,7 +40,7 @@ jobs:
   generate-atifact:
     name: Generate Artifact
     needs: [plan]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: checkout code
         uses: actions/checkout@v2
@@ -53,6 +53,9 @@ jobs:
         with:
           name: ${{ env.RELEASE_ID }}
           path: ${{ env.ARTIFACT_NAME }}
+
+      - name: Disable EC2 metadata
+        run: echo "export AWS_EC2_METADATA_DISABLED=true" >> $GITHUB_ENV
 
       - name: testing CI
         run: |
