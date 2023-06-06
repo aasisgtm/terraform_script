@@ -1,0 +1,49 @@
+name: Deploy to UAT
+on:
+  workflow_dispatch:
+    inputs:
+      artifact-name:
+        description: Artifact Name
+        required: true
+jobs:
+  apply:
+    name: Deploy to UAT
+    runs-on: ubuntu-latest
+    environment: uat
+
+    env:
+      RELEASE_ID: ${{ github.event.inputs.artifact-name }}
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: download artifact from  S3
+        run: 
+          aws s3 cp  s3://artifact-stores/${{ env.RELEASE_ID }}.zip $GITHUB_WORKSPACE
+
+      - name: unzip artifacts
+        run: unzip ${{ env.RELEASE_ID }}.zip
+        
+      - name: Terraform apply
+        id: terraform-apply
+        run: |
+          terraform init
+          if ! terraform workspace select uat; then
+            terraform workspace new uat; 
+          else
+            terraform workspace select uat
+          fi
+            terraform apply -auto-approve
+            terraform destroy -auto-approve
+
+
+
+
+
+
