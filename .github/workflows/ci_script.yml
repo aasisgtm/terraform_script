@@ -78,12 +78,10 @@ jobs:
  
 
       - name: upload artifact to S3
-        run: |
-          aws s3 ls
-          aws s3 cp ${{ env.ARTIFACT_NAME }} s3://artifact-stores/${{ env.ARTIFACT_NAME }}
+        run: aws s3 cp ${{ env.ARTIFACT_NAME }} s3://artifact-stores/${{ env.ARTIFACT_NAME }}
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ vars.AWS_REGION }}
           AWS_EC2_METADATA_DISABLED: true
