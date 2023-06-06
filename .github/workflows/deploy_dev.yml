@@ -5,11 +5,6 @@ on:
       artifact-name:
         description: Artifact Name
         required: true
-
-permissions:
-  id-token: write # This is required for requesting the JWT
-  contents: read  # This is required for actions/checkout
-
 jobs:
   apply:
     name: Deploy to DEV
@@ -20,15 +15,17 @@ jobs:
       RELEASE_ID: ${{ github.event.inputs.artifact-name }}
 
     steps:
-      - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ secrets.CICD_ROLE }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: download artifact from  S3
         run: 
-          aws s3 cp s3://artifact-stores/${{ env.RELEASE_ID }}.zip $GITHUB_WORKSPACE
+          aws s3 cp  s3://artifact-stores/${{ env.RELEASE_ID }}.zip $GITHUB_WORKSPACE
 
       - name: unzip artifacts
         run: unzip ${{ env.RELEASE_ID }}.zip
