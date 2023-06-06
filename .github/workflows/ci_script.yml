@@ -4,6 +4,7 @@ on:
     branches: [ "main" ]
 env:
   RELEASE_ID: "v${{ github.event.number }}"
+  ARTIFACT_NAME: "v${{ github.event.number }}.zip"
 
 jobs:
   plan:
@@ -51,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.RELEASE_ID }}
-          path: ${{ env.RELEASE_ID }}.zip
+          path: ${{ env.ARTIFACT_NAME }}
 
       - name: testing CI
         run: |
@@ -76,4 +77,4 @@ jobs:
 
       - name: upload artifact to S3
         run: 
-          aws s3 cp ./${{ env.RELEASE_ID }}.zip s3://artifact-stores/${{ env.RELEASE_ID }}.zip
+          aws s3 cp ${{ env.ARTIFACT_NAME }} s3://artifact-stores/${{ env.ARTIFACT_NAME }}
