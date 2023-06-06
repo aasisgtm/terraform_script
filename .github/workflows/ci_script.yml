@@ -68,13 +68,13 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-west-2
 
-      - name: testing ci
-        run: |
-          ls -la
-          pwd
-          cd /home/runner/work/terraform_script/terraform_script/
-          pwd
-          ls -la
+      # - name: testing ci
+      #   run: |
+      #     ls -la
+      #     pwd
+      #     cd /home/runner/work/terraform_script/terraform_script/
+      #     pwd
+      #     ls -la
 
       - name: upload artifact to S3
         run: aws s3 cp ${{ env.ARTIFACT_NAME }} s3://artifact-stores/${{ env.ARTIFACT_NAME }}
