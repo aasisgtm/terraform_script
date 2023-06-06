@@ -15,17 +15,15 @@ jobs:
       RELEASE_ID: ${{ github.event.inputs.artifact-name }}
 
     steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: us-west-2
+          role-to-assume: ${{ secrets.CICD_ROLE }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: download artifact from  S3
         run: 
-          aws s3 cp  s3://artifact-stores/${{ env.RELEASE_ID }}.zip $GITHUB_WORKSPACE
+          aws s3 cp s3://artifact-stores/${{ env.RELEASE_ID }}.zip $GITHUB_WORKSPACE
 
       - name: unzip artifacts
         run: unzip ${{ env.RELEASE_ID }}.zip
