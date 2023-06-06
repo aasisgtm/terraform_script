@@ -39,7 +39,7 @@ jobs:
           else
             terraform workspace select dev
           fi
-            terraform destroy -auto-approve
+            terraform apply -auto-approve
 
 
 

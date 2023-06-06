@@ -1,4 +1,4 @@
 resource "aws_s3_bucket" "codepipeline_bucket" {
-    bucket = "express-artifact"
+    bucket = "express-app-artifact-store"
     acl    = "private"
 }
