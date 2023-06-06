@@ -53,22 +53,22 @@ jobs:
           name: ${{ env.RELEASE_ID }}
           path: ${{ env.RELEASE_ID }}.zip
 
-      - name: checkout code
-        uses: actions/checkout@v2
+      # - name: checkout code
+      #   uses: actions/checkout@v2
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: us-west-2
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+      #     aws-region: us-west-2
 
-      - name: Install AWS CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y awscli
+      # - name: Install AWS CLI
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y awscli
 
       - name: upload artifact to S3
         run: 
-          aws s3 cp ${{ env.RELEASE_ID }}.zip s3://artifact-stores/${{ env.RELEASE_ID }}.zip
+          aws s3 cp ./${{ env.RELEASE_ID }}.zip s3://artifact-stores/${{ env.RELEASE_ID }}.zip
