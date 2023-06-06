@@ -53,6 +53,11 @@ jobs:
           name: ${{ env.RELEASE_ID }}
           path: ${{ env.RELEASE_ID }}.zip
 
+      - name: testing CI
+        run: |
+          pwd
+          ls -la
+
       # - name: checkout code
       #   uses: actions/checkout@v2
 
