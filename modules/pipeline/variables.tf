@@ -29,7 +29,7 @@ variable "name" {
 
 variable "github_repo_owner" {
   type        = string
-  default     = "aashishgautam"
+  default     = "aasisgtm"
   description = "Github's owner name"
 }
 
@@ -41,7 +41,7 @@ variable "github_repo_name" {
 
 variable "github_branch" {
   type        = string
-  default     = "main"
+  default     = "master"
   description = "Github branch used for application"
 }
 
