@@ -34,12 +34,8 @@ jobs:
         id: terraform-apply
         run: |
           terraform init
-          if ! terraform workspace select dev; then
-            terraform workspace new dev; 
-          else
-            terraform workspace select dev
-          fi
-            terraform apply -auto-approve
+          terraform workspace select dev || terraform workspace new dev 
+          terraform apply -auto-approve
 
 
 

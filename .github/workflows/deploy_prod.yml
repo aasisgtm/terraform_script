@@ -34,12 +34,8 @@ jobs:
         id: terraform-apply
         run: |
           terraform init
-          if ! terraform workspace select prod; then
-            terraform workspace new prod; 
-          else
-            terraform workspace select prod
-          fi
-            terraform apply -auto-approve
+          terraform workspace select prod || terraform workspace new prod 
+          terraform apply -auto-approve
 
 
 

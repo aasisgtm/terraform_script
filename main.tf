@@ -1,13 +1,3 @@
-# resource "aws_vpc" "main" {
-#   cidr_block       = var.cidr_block
-#   instance_tenancy = "default"
-
-#   tags = {
-#     Project = "Devops"
-#     Creator = "Aashish"
-#     Name = "Aashish"
-#   }
-# }
 
 module "vpc" {
   source = "./modules/vpc"
@@ -22,6 +12,7 @@ module "subnets" {
 
 module "amplify" {
   source = "./modules/amplify"
+  name = "aashish-amplify-app-${terraform.workspace}"
 
 }
 
@@ -29,6 +20,7 @@ module "rds" {
   source             = "./modules/rds"
   vpc_id             = module.vpc.vpc-id
   private_subnet_ids = module.subnets.private_subnet_ids
+
 }
 
 module "fargate" {
@@ -48,7 +40,3 @@ module "pipeline" {
 module "s3" {
   source = "./modules/s3"
 }
-
-# module "backend" {
-#   source = "./modules/backend"
-# }

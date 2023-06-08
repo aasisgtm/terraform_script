@@ -1,5 +1,5 @@
 resource "aws_amplify_app" "react-app" {
-  name         = "amplify-app-aasis"
+  name         = var.name
   repository   = var.git_repository
   access_token = var.access_token
 
