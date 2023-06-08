@@ -14,12 +14,6 @@ jobs:
   plan:
     name: Terraform Plan
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        environment: ['dev', 'uat', 'prod']
-    env:
-      TF_ENV: ${{ matrix.environment }}
-
     steps:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -38,7 +32,7 @@ jobs:
 
       - name: terraform plan
         id: terraform-plan
-        run: terraform plan -input=false -lock=false
+        run: terraform plan -input=false
 
 
   generate-atifact:
@@ -65,7 +59,6 @@ jobs:
           aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ vars.AWS_REGION }}
-
 
       - name: upload artifact to S3
         run: aws s3 cp ${{ env.ARTIFACT_NAME }} s3://artifact-stores/${{ env.ARTIFACT_NAME }}

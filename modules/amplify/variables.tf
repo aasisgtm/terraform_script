@@ -12,7 +12,7 @@ variable "creator" {
 
 variable "name" {
   type        = string
-  default     = "aashish-public-subnet-1"
+  default     = "aashish-amplify-app"
   description = "Tag for public subnet"
 }
 

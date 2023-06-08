@@ -34,13 +34,8 @@ jobs:
         id: terraform-apply
         run: |
           terraform init
-          if ! terraform workspace select uat; then
-            terraform workspace new uat; 
-          else
-            terraform workspace select uat
-          fi
-            terraform apply -auto-approve
-            terraform destroy -auto-approve
+          terraform workspace select uat || terraform workspace new uat 
+          terraform apply -auto-approve
 
 
 
