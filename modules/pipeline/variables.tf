@@ -3,12 +3,6 @@ variable "vpc_id" {
   description = "VPC ID used to create subnet"
 }
 
-variable "environment" {
-  type        = string
-  description = "Name ot the stage/environment i.e. dev, qa, uat or prod"
-  default     = "dev"
-}
-
 variable "project" {
   type        = string
   default     = "devops"

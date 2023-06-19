@@ -2,7 +2,7 @@
 
 
 resource "aws_iam_role" "codebuild_role" {
-  name = "codebuild-role"
+  name = "codebuild-role-${terraform.workspace}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -19,7 +19,7 @@ resource "aws_iam_role" "codebuild_role" {
 
 
 resource "aws_iam_role_policy" "codebuild_policy" {
-  name = "codebuild_policy"
+  name = "codebuild_policy-${terraform.workspace}"
   role = aws_iam_role.codebuild_role.id
 
   policy = jsonencode({
@@ -68,7 +68,7 @@ resource "aws_iam_role_policy" "codebuild_policy" {
 ### IAM Role and Policy for Codepipeline
 
 resource "aws_iam_role" "codepipeline_role" {
-  name = "codepipeline_role"
+  name = "codepipeline_role-${terraform.workspace}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -84,7 +84,7 @@ resource "aws_iam_role" "codepipeline_role" {
 }
 
 resource "aws_iam_role_policy" "codepipeline_policy" {
-  name = "codepipeline_policy"
+  name = "codepipeline_policy-${terraform.workspace}"
   role = aws_iam_role.codepipeline_role.id
   policy = jsonencode({
     Version = "2012-10-17",

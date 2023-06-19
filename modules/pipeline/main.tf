@@ -1,5 +1,5 @@
 resource "aws_codebuild_project" "express_app" {
-  name          = "express_app"
+  name          = "express_app-${terraform.workspace}"
   description   = "Builds an express application"
   service_role  = aws_iam_role.codebuild_role.arn
   build_timeout = "5"
@@ -20,7 +20,7 @@ resource "aws_codebuild_project" "express_app" {
 
 
 resource "aws_codestarconnections_connection" "codestar" {
-  name          = "express-app-connection"
+  name          = "express-app-connection-${terraform.workspace}"
   provider_type = "GitHub"
   tags = {
     Name    = var.name
@@ -31,7 +31,7 @@ resource "aws_codestarconnections_connection" "codestar" {
 
 
 resource "aws_codepipeline" "codepipeline" {
-  name     = "express_app_pipeline"
+  name     = "express_app_pipeline-${terraform.workspace}"
   role_arn = aws_iam_role.codepipeline_role.arn
   artifact_store {
     location = var.s3_bucket

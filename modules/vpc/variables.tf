@@ -18,8 +18,8 @@ variable "creator" {
 
 variable "name" {
   type        = string
-  default     = "aashish-vpc"
-  description = "Tag for project"
+  default     = "aasis"
+  description = "aashish-vpc"
 }
 
 variable "instance_tenancy" {

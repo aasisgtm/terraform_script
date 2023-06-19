@@ -1,19 +1,18 @@
+
 variable "project" {
-  type        = string
+  type = string
   default     = "devops"
-  description = "Tag for public subnet"
+  description = "Tag for project"
 }
 
 variable "creator" {
-  type        = string
   default     = "aashish"
-  description = "Tag for public subnet"
+  description = "Tag for creator"
 }
 
 variable "name" {
-  type        = string
   default     = "aashish-amplify-app"
-  description = "Tag for public subnet"
+  description = "Tag for amplify app"
 }
 
 variable "git_repository" {

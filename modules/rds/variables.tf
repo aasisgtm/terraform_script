@@ -12,7 +12,7 @@ variable "creator" {
 
 variable "name" {
   type        = string
-  default     = "aasis-postgres-db"
+  default     = "rds"
   description = "Tag for name"
 }
 
@@ -24,7 +24,7 @@ variable "private_subnet_ids" {
 
 variable "db_name" {
   type    = string
-  default = "postgresdb"
+  default = "aasis-postgres-db"
 }
 
 variable "postgres_username" {
@@ -42,4 +42,9 @@ variable "postgres_password" {
 variable "vpc_id" {
   type        = string
   description = "VPC ID used in "
+}
+
+variable "db_subnet_group_name" {
+  type = string
+  default = "private-subnet-db"
 }

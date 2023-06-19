@@ -1,7 +1,7 @@
 ## APllication Load Balancer
 
 resource "aws_lb" "application_load_balancer" {
-  name               = "${var.app_name}-${var.environment}-alb"
+  name               = "${var.app_name}-alb-${terraform.workspace}"
   load_balancer_type = "application"
   subnets            = var.public_subnet_ids
   security_groups    = [aws_security_group.lb.id]
@@ -16,7 +16,7 @@ resource "aws_lb" "application_load_balancer" {
 ## Target group for ALB
 
 resource "aws_lb_target_group" "hello_world" {
-  name        = "${var.app_name}-tgt-group"
+  name        = "${var.app_name}-tgt-group-${terraform.workspace}"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
@@ -50,7 +50,7 @@ resource "aws_lb_listener" "hello_world" {
 ## Security Group for ALB
 
 resource "aws_security_group" "lb" {
-  name   = "${var.app_name}-alb-sg"
+  name   = "${var.app_name}-alb-sg-${terraform.workspace}"
   vpc_id = var.vpc_id
 
   ingress {
