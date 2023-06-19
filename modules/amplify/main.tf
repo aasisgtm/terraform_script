@@ -1,5 +1,5 @@
 resource "aws_amplify_app" "react-app" {
-  name         = var.name
+  name         = "${var.name}-${terraform.workspace}"
   repository   = var.git_repository
   access_token = var.access_token
 

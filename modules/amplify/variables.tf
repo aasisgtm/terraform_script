@@ -1,18 +1,17 @@
+
 variable "project" {
-  type        = string
-  default     = "devops-${terraform.workspace}"
+  type = string
+  default     = "devops"
   description = "Tag for project"
 }
 
 variable "creator" {
-  type        = string
-  default     = "aashish-${terraform.workspace}"
+  default     = "aashish"
   description = "Tag for creator"
 }
 
 variable "name" {
-  type        = string
-  default     = "aashish-amplify-app-${terraform.workspace}"
+  default     = "aashish-amplify-app"
   description = "Tag for amplify app"
 }
 

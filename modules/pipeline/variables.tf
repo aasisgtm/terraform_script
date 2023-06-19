@@ -5,19 +5,19 @@ variable "vpc_id" {
 
 variable "project" {
   type        = string
-  default     = "devops-${terraform.workspace}"
+  default     = "devops"
   description = "Tag for project"
 }
 
 variable "creator" {
   type        = string
-  default     = "aashish-${terraform.workspace}"
+  default     = "aashish"
   description = "Tag for creator"
 }
 
 variable "name" {
   type        = string
-  default     = "aasis-${terraform.workspace}"
+  default     = "aasis"
   description = "Tag for name"
 }
 

@@ -1,18 +1,18 @@
 variable "project" {
   type        = string
-  default     = "devops-${terraform.workspace}"
+  default     = "devops"
   description = "Tag for project"
 }
 
 variable "creator" {
   type        = string
-  default     = "aashish-${terraform.workspace}"
+  default     = "aashish"
   description = "Tag for creator"
 }
 
 variable "name" {
   type        = string
-  default     = "aasis-postgres-db-${terraform.workspace}"
+  default     = "rds"
   description = "Tag for name"
 }
 
@@ -24,7 +24,7 @@ variable "private_subnet_ids" {
 
 variable "db_name" {
   type    = string
-  default = "postgresdb-${terraform.workspace}"
+  default = "aasis-postgres-db"
 }
 
 variable "postgres_username" {
@@ -46,5 +46,5 @@ variable "vpc_id" {
 
 variable "db_subnet_group_name" {
   type = string
-  default = "private-subnet-db-${terraform.workspace}"
+  default = "private-subnet-db"
 }

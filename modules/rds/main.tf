@@ -1,5 +1,5 @@
 resource "aws_db_instance" "postgres" {
-  identifier             = var.db_name
+  identifier             = "${var.db_name}-${terraform.workspace}"
   engine                 = "postgres"
   engine_version         = "12.11"
   instance_class         = "db.t2.micro"
