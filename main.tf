@@ -12,8 +12,6 @@ module "subnets" {
 
 module "amplify" {
   source = "./modules/amplify"
-  name = "aashish-amplify-app-${terraform.workspace}"
-
 }
 
 module "rds" {

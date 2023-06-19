@@ -16,7 +16,7 @@ resource "aws_subnet" "private_subnets" {
   availability_zone = each.value.availability_zone
 
   tags = {
-    Name    = "${var.private_name}-${each.key}"
+    Name    = "${var.private_name}-${each.key}-${terraform.workspace}"
     Project = var.project
     Creator = var.creator
   }
@@ -26,7 +26,7 @@ resource "aws_route_table" "private" {
   vpc_id = var.vpc_id
 
   tags = {
-    Name    = var.private_name
+    Name    = "${var.private_name}-${terraform.workspace}"
     Project = var.project
     Creator = var.creator
   }
