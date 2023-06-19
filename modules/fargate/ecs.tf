@@ -1,7 +1,7 @@
 ## ECS Cluster
 
 resource "aws_ecs_cluster" "main" {
-  name = "${var.app_name}-${var.environment}-cluster"
+  name = "${var.app_name}-cluster-${terraform.workspace}"
 
   tags = {
     Name    = var.name
@@ -15,11 +15,11 @@ resource "aws_ecs_cluster" "main" {
 ## ECS Task Definition
 
 resource "aws_ecs_task_definition" "aws_first_task" {
-  family                   = "${var.app_name}-first-task" # Naming our first task
+  family                   = "${var.app_name}-first-task-${terraform.workspace}" # Naming our first task
   container_definitions    = <<DEFINITION
   [
     {
-      "name": "${var.app_name}-first-task",
+      "name": "${var.app_name}-first-task-${terraform.workspace}",
       "image": "${aws_ecr_repository.aws_ecr.repository_url}",
       "essential": true,
       "logConfiguration": {
@@ -27,7 +27,7 @@ resource "aws_ecs_task_definition" "aws_first_task" {
         "options": {
           "awslogs-group": "${aws_cloudwatch_log_group.log-group.id}",
           "awslogs-region": "${var.aws_region}",
-          "awslogs-stream-prefix": "${var.app_name}-${var.environment}"
+          "awslogs-stream-prefix": "${var.app_name}-${terraform.workspace}}"
         }
       },
       "portMappings": [
@@ -59,7 +59,7 @@ resource "aws_ecs_task_definition" "aws_first_task" {
 # ## ECS Service
 
 resource "aws_ecs_service" "my_service" {
-  name            = "my-first-service"
+  name            = "my-first-service-${terraform.workspace}"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.aws_first_task.arn
   launch_type     = "FARGATE"

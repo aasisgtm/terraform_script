@@ -13,7 +13,7 @@ variable "public_subnet_ids" {
 variable "app_name" {
   type        = string
   description = "Name of the application"
-  default     = "devops"
+  default     = "devops-${terraform.workspace}"
 }
 
 variable "aws_region" {
@@ -22,27 +22,20 @@ variable "aws_region" {
   default     = "us-west-2"
 }
 
-
-variable "environment" {
-  type        = string
-  description = "Name ot the stage/environment i.e. dev, qa, uat or prod"
-  default     = "dev"
-}
-
 variable "project" {
   type        = string
-  default     = "devops"
+  default     = "devops-${terraform.workspace}"
   description = "Tag for project"
 }
 
 variable "creator" {
   type        = string
-  default     = "aashish"
+  default     = "aashish-${terraform.workspace}"
   description = "Tag for creator"
 }
 
 variable "name" {
   type        = string
-  default     = "aasis"
+  default     = "aasis-${terraform.workspace}"
   description = "Tag for name"
 }

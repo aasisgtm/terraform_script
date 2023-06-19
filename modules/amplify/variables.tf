@@ -1,19 +1,19 @@
 variable "project" {
   type        = string
-  default     = "devops"
-  description = "Tag for public subnet"
+  default     = "devops-${terraform.workspace}"
+  description = "Tag for project"
 }
 
 variable "creator" {
   type        = string
-  default     = "aashish"
-  description = "Tag for public subnet"
+  default     = "aashish-${terraform.workspace}"
+  description = "Tag for creator"
 }
 
 variable "name" {
   type        = string
-  default     = "aashish-amplify-app"
-  description = "Tag for public subnet"
+  default     = "aashish-amplify-app-${terraform.workspace}"
+  description = "Tag for amplify app"
 }
 
 variable "git_repository" {

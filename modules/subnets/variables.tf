@@ -10,25 +10,25 @@ variable "igw-id" {
 
 variable "project" {
   type        = string
-  default     = "devops"
+  default     = "devops-${terraform.workspace}"
   description = "Tag for project name"
 }
 
 variable "creator" {
   type        = string
-  default     = "aashish"
+  default     = "aashish-${terraform.workspace}"
   description = "Tag for creator name"
 }
 
 variable "public_name" {
   type        = string
-  default     = "aashish-public"
+  default     = "aashish-public-${terraform.workspace}"
   description = "Tag for the public resource name"
 }
 
 variable "private_name" {
   type        = string
-  default     = "aashish-private"
+  default     = "aashish-private-${terraform.workspace}"
   description = "Tag for the private resource name"
 }
 

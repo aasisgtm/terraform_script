@@ -1,7 +1,7 @@
 ## APllication Load Balancer
 
 resource "aws_lb" "application_load_balancer" {
-  name               = "${var.app_name}-${var.environment}-alb"
+  name               = "${var.app_name}-alb-${terraform.workspace}"
   load_balancer_type = "application"
   subnets            = var.public_subnet_ids
   security_groups    = [aws_security_group.lb.id]

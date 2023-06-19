@@ -19,13 +19,13 @@ resource "aws_db_instance" "postgres" {
 }
 
 resource "aws_db_subnet_group" "default" {
-  name        = "private-subnet-db"
+  name        = "${var.db_subnet_group_name}-${terraform.workspace}"
   subnet_ids  = var.private_subnet_ids
   description = "Private subnet group for PostgreSQL"
 }
 
 resource "aws_security_group" "postgres" {
-  name_prefix = "postgres-security-group"
+  name_prefix = "postgres-security-group-${terraform.workspace}"
   description = "Security group for PostgreSQL"
   vpc_id      = var.vpc_id
 

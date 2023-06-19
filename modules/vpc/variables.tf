@@ -6,19 +6,19 @@ variable "cidr_block" {
 
 variable "project" {
   type        = string
-  default     = "devops"
+  default     = "devops-${terraform.workspace}"
   description = "Tag for project"
 }
 
 variable "creator" {
   type        = string
-  default     = "aashish"
+  default     = "aashish-${terraform.workspace}"
   description = "Tag for project"
 }
 
 variable "name" {
   type        = string
-  default     = "aashish-vpc"
+  default     = "aashish-vpc-${terraform.workspace}"
   description = "Tag for project"
 }
 

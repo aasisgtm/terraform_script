@@ -3,27 +3,21 @@ variable "vpc_id" {
   description = "VPC ID used to create subnet"
 }
 
-variable "environment" {
-  type        = string
-  description = "Name ot the stage/environment i.e. dev, qa, uat or prod"
-  default     = "dev"
-}
-
 variable "project" {
   type        = string
-  default     = "devops"
+  default     = "devops-${terraform.workspace}"
   description = "Tag for project"
 }
 
 variable "creator" {
   type        = string
-  default     = "aashish"
+  default     = "aashish-${terraform.workspace}"
   description = "Tag for creator"
 }
 
 variable "name" {
   type        = string
-  default     = "aasis"
+  default     = "aasis-${terraform.workspace}"
   description = "Tag for name"
 }
 
