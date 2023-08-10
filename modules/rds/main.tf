@@ -10,6 +10,7 @@ resource "aws_db_instance" "postgres" {
   db_subnet_group_name   = aws_db_subnet_group.default.name
   parameter_group_name   = "default.postgres12"
   vpc_security_group_ids = [aws_security_group.postgres.id]
+  skip_final_snapshot    = "true"
 
   tags = {
     Name    = var.name
