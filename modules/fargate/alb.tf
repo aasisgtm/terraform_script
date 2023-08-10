@@ -28,7 +28,7 @@ resource "aws_lb_target_group" "hello_world" {
     protocol            = "HTTP"
     matcher             = "200"
     timeout             = "3"
-    path                = "/v1/status"
+    path                = "/"
     unhealthy_threshold = "2"
   }
 
