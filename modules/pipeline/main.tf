@@ -15,6 +15,10 @@ resource "aws_codebuild_project" "express_app" {
       name  = "REPOSITORY_NAME"
       value = "devops-ecr-${terraform.workspace}"
     }
+    environment_variable {
+      name  = "CONTAINER_DEFINITION_NAME"
+      value = "devops-first-task-${terraform.workspace}"
+    }
   }
   source {
     type = "CODEPIPELINE"
