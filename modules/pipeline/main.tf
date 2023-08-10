@@ -11,10 +11,10 @@ resource "aws_codebuild_project" "express_app" {
     image           = "aws/codebuild/standard:4.0"
     type            = "LINUX_CONTAINER"
     privileged_mode = true
-  }
-  environment_variable {
-    name  = "REPOSITORY_NAME"
-    value = "devops-ecr-${terraform.workspace}"
+    environment_variable {
+      name  = "REPOSITORY_NAME"
+      value = "devops-ecr-${terraform.workspace}"
+    }
   }
   source {
     type = "CODEPIPELINE"
