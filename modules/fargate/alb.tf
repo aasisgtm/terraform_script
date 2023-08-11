@@ -67,3 +67,9 @@ resource "aws_security_group" "lb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+
+
+
+
+
