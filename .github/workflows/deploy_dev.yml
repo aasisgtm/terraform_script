@@ -23,9 +23,8 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: download artifact from  S3
-        run: 
-          aws s3 cp  s3://artifact-stores/${{ env.RELEASE_ID }}.zip $GITHUB_WORKSPACE
+      - name: download artifact from S3
+        run: aws s3 cp s3://artifact-stores/${{ env.RELEASE_ID }}.zip $GITHUB_WORKSPACE
 
       - name: unzip artifacts
         run: unzip ${{ env.RELEASE_ID }}.zip
@@ -36,18 +35,31 @@ jobs:
           terraform init
           terraform workspace select dev || terraform workspace new dev 
           terraform apply -auto-approve
+        # env:
+        #   UPLOAD_LOGS: ${{ job.status }}
 
-        env:
-          UPLOAD_LOGS: ${{ job.status }}
-
+  failed-logs:
+    name: DEV Logs
+    runs-on: ubuntu-latest
+    environment: dev
+    needs: apply
+    steps:
       - name: Upload build logs
-        if: ${{ env.UPLOAD_LOGS != 'success' }}
+        if: ${{ needs.apply.result != 'success' }}
         uses: actions/upload-artifact@v2
         with:
-          name: dev-build-logs
+          name: dev-build-error-logs-${{ github.run_number }}-${{ github.run_id }}-${{ github.run_created }} # Versioned name
           path: ${{ github.workspace }}/github/workflow/logs
 
-
-
-
-
+  success-logs:
+    name: DEV Success Logs
+    runs-on: ubuntu-latest
+    environment: dev
+    needs: apply
+    if: ${{ needs.apply.result == 'success' }}
+    steps:
+      - name: Upload build logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: dev-build-success-logs-${{ github.run_number }}-${{ github.run_id }}-${{ github.run_created }} # Versioned name
+          path: ${{ github.workspace }}/github/workflow/logs
