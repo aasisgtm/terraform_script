@@ -42,7 +42,6 @@ jobs:
     name: DEV Logs
     runs-on: ubuntu-latest
     environment: dev
-    needs: apply
     steps:
       - name: Upload build logs
         if: ${{ needs.apply.result != 'success' }}
@@ -55,7 +54,6 @@ jobs:
     name: DEV Success Logs
     runs-on: ubuntu-latest
     environment: dev
-    needs: apply
     if: ${{ needs.apply.result == 'success' }}
     steps:
       - name: Upload build logs
