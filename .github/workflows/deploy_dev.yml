@@ -39,12 +39,15 @@ jobs:
         #   UPLOAD_LOGS: ${{ job.status }}
 
   failed-logs:
-    name: DEV Logs
+    name: DEV Error Logs
     runs-on: ubuntu-latest
     environment: dev
+    needs: apply
+    if: ${{ failure() }}
+    # if: ${{ needs.apply.result != 'success' }}
+
     steps:
       - name: Upload build logs
-        if: ${{ needs.apply.result != 'success' }}
         uses: actions/upload-artifact@v2
         with:
           name: dev-build-error-logs-${{ github.run_number }}-${{ github.run_id }}-${{ github.run_created }} # Versioned name
@@ -54,7 +57,8 @@ jobs:
     name: DEV Success Logs
     runs-on: ubuntu-latest
     environment: dev
-    if: ${{ needs.apply.result == 'success' }}
+    needs: apply
+    if: ${{ success() }}
     steps:
       - name: Upload build logs
         uses: actions/upload-artifact@v2
