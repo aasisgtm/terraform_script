@@ -47,21 +47,25 @@ jobs:
     # if: ${{ needs.apply.result != 'success' }}
 
     steps:
-      - name: Upload build logs
-        uses: actions/upload-artifact@v2
-        with:
-          name: dev-build-error-logs-${{ github.run_number }}-${{ github.run_id }}-${{ github.run_created }} # Versioned name
-          path: ${{ github.workspace }}/github/workflow/logs
+     - name: Check log directory
+       run: ls ${{ github.workspace }}
+     - name: Find log files
+       run: find ${{ github.workspace }} -type f -name "*.log"
+  #     - name: Upload build logs
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: dev-build-error-logs-${{ github.run_number }}-${{ github.run_id }}-${{ github.run_created }} # Versioned name
+  #         path: ${{ github.workspace }}/github/workflow/logs
 
-  success-logs:
-    name: DEV Success Logs
-    runs-on: ubuntu-latest
-    environment: dev
-    needs: apply
-    if: ${{ success() }}
-    steps:
-      - name: Upload build logs
-        uses: actions/upload-artifact@v2
-        with:
-          name: dev-build-success-logs-${{ github.run_number }}-${{ github.run_id }}-${{ github.run_created }} # Versioned name
-          path: ${{ github.workspace }}/github/workflow/logs
+  # success-logs:
+  #   name: DEV Success Logs
+  #   runs-on: ubuntu-latest
+  #   environment: dev
+  #   needs: apply
+  #   if: ${{ success() }}
+  #   steps:
+  #     - name: Upload build logs
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: dev-build-success-logs-${{ github.run_number }}-${{ github.run_id }}-${{ github.run_created }} # Versioned name
+  #         path: ${{ github.workspace }}/github/workflow/logs
