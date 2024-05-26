@@ -37,10 +37,14 @@ jobs:
           terraform workspace select dev || terraform workspace new dev 
           terraform apply -auto-approve
 
+        env:
+          UPLOAD_LOGS: ${{ job.status }}
+
       - name: Upload build logs
+        if: ${{ env.UPLOAD_LOGS != 'success' }}
         uses: actions/upload-artifact@v2
         with:
-          name: dev-build-los
+          name: dev-build-logs
           path: ${{ github.workspace }}/github/workflow/logs
 
 
