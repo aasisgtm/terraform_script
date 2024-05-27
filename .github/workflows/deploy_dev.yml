@@ -48,9 +48,9 @@ jobs:
 
     steps:
      - name: Check log directory
-       run: ls ${{ github.workspace }}
+       run: ls -al
      - name: Find log files
-       run: find ${{ github.workspace }} -type f -name "*.log"
+       run: find ./ -type f -name "*.log"
   #     - name: Upload build logs
   #       uses: actions/upload-artifact@v2
   #       with:
